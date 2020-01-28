@@ -1,0 +1,19 @@
+language: smalltalk
+sudo: false
+
+# Select operating system(s)
+notifications:
+  email:
+        on_succes: never
+        on_failures: always
+
+os:
+  - linux
+  - osx
+
+# Select compatible Smalltalk image(s)
+smalltalk:
+  - Pharo64-8.0
+  # ...
+  - Pharo32-8.0
+  # ...
