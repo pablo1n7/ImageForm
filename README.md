@@ -9,7 +9,7 @@ Small Lib for basic Image processing. Programmed in Pharo for Pharo :)
 ```smalltalk
 Metacello new
   baseline: #ImageForm;
-  repository: 'github://pablo1n7/ImageForm';
+  repository: 'github://pablo1n7/ImageForm/src';
   load.
 ```
 
