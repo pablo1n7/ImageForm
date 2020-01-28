@@ -1,7 +1,7 @@
 SmalltalkCISpec {
   #loading : [
     SCIMetacelloLoadSpec {
-      #baseline : 'ImagenForm',
+      #baseline : 'ImageForm',
       #directory: 'src',
       #platforms : [#pharo]
     }
