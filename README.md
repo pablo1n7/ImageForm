@@ -75,11 +75,18 @@ aResultSum := aImageB + aImageA.
 ![](https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_sum.png)
 
 
+## Show Image.
+```smalltalk
+aImage show: 'Eileen Collins'.
+```
+![](https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/show.jpg)
+
 ## Save Image.
 ```smalltalk
 aScaledImage save:'/Users/pablo/Documents/Pharo/pwq7S_scaled.jpg'.
 aScaledImage save:'/Users/pablo/Documents/Pharo/pwq7S_scaled.png'.
 ```
+
 
 # TODO: 
 * [ ] Operations with Kernels.
