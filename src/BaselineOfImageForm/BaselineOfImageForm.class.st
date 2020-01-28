@@ -13,7 +13,7 @@ BaselineOfImageForm >> baseline: spec [
 			"Packages"
 			spec
 				package: 'Image-Form-core';	
-				package: 'Image-Form-test' with: [spec requires: #(Image-Form-core)].
+				package: 'Image-Form-test'.
 		
 		]
 ]
