@@ -90,4 +90,5 @@ aScaledImage save:'/Users/pablo/Documents/Pharo/pwq7S_scaled.png'.
 
 # TODO: 
 * [ ] Operations with Kernels.
+* [ ] Create Histogram for images.
 
