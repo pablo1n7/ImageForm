@@ -1,11 +1,11 @@
 Class {
-	#name : #BaselineOfImagenForm,
+	#name : #BaselineOfImageForm,
 	#superclass : #BaselineOf,
 	#category : #BaselineOfImageForm
 }
 
 { #category : #baselines }
-BaselineOfImagenForm >> baseline: spec [
+BaselineOfImageForm >> baseline: spec [
 	<baseline>
 	spec
 		for:#common
