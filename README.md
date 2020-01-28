@@ -20,42 +20,46 @@ Metacello new
 ```smalltalk
 aImage := ImageForm open: '/Users/sdas/Documents/pwq7S.jpg'.
 ```
+![](https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S.jpg)
 
 ## Transform to Gray Scale.
 ```smalltalk
 aGrayImage := aImage asGrayScale
 ```
-![](https://raw.githubusercontent.com/pablo1n7/Smallbook/master/StaticFiles/slide_1.jpg)
+![](https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_gray.jpg)
 
 
 ## Flip Image.
 ```smalltalk
 aFlippedImage := aImage flipHorizontally.
 ```
-![](https://raw.githubusercontent.com/pablo1n7/Smallbook/master/StaticFiles/slide_2.jpg)
+![](https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_flipHorizontally.jpg)
 
 ```smalltalk
 aFlippedImage := aImage flipVertically.
 ```
-![](https://raw.githubusercontent.com/pablo1n7/Smallbook/master/StaticFiles/slide_2.jpg)
+![](https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_flipVertically.jpg)
 
 
 ## Rotate Image.
 ```smalltalk
 aRotatedImage := aImage rotateBy: 45.
 ```
-![](https://raw.githubusercontent.com/pablo1n7/Smallbook/master/StaticFiles/slide_3.jpg)
+![](https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_rotated45.jpg)
 
 ```smalltalk
 aRotatedImage := aImage rotateBy: #left centerAt: 0@0. 
 ```
-![](https://raw.githubusercontent.com/pablo1n7/Smallbook/master/StaticFiles/slide_3.jpg)
+![](https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_rotatedLeft.jpg)
 
 
 ## Scale Image.
 ```smalltalk
 aScaledImage := aImageA scaled: 100 height: 100. 
 ```
+![](https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_scaled.jpg)
+
+
 ## Basic Arismetic.
 ```smalltalk
 aImageA := ImageForm open: '/Users/sdas/Documents/pwq7S.jpg'.
@@ -63,12 +67,12 @@ aImageB := ImageForm open: '/Users/sdas/Documents/pharo.png'.
 
 aResultSub := aImageB - aImageA.
 ```
-![](https://raw.githubusercontent.com/pablo1n7/Smallbook/master/StaticFiles/slide_3.jpg)
+![](https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_sub.png)
 
 ```smalltalk
 aResultSum := aImageB + aImageA.
 ```
-![](https://raw.githubusercontent.com/pablo1n7/Smallbook/master/StaticFiles/slide_3.jpg)
+![](https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_sum.png)
 
 
 ## Save Image.
