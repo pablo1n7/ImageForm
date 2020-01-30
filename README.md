@@ -72,7 +72,7 @@ aCropImage := anImageForm lighter:0.25.
 ```
 ![](https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_lighter.jpg)
 
-## Basic Arismetic.
+## Basic Arithmetic.
 ```smalltalk
 anImageA := ImageForm open: '/Users/sdas/Documents/pwq7S.jpg'.
 anImageB := ImageForm open: '/Users/sdas/Documents/pharo.png'.
