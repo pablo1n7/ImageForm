@@ -37,6 +37,20 @@ ImageFormTest >> testAsGrayScaleWithAlpha [
 ]
 
 { #category : #test }
+ImageFormTest >> testCropHW [
+	"crop a imageTest. The color of the image should be all blue"
+	
+	|aImage aCroppedImage|
+	
+	aImage := ImageForm imageTest.
+	aCroppedImage := aImage crop:  0@0 h: 50 w: 50.
+	self assert: (aCroppedImage shape) equals: '50X50'.
+	self assert: (aImage shape) equals: '100X100'.
+	self assert: (aCroppedImage colorsUsed ) equals: { Color blue }.
+	
+]
+
+{ #category : #test }
 ImageFormTest >> testFlipHorizontally [
 	"Flip horizontally the imageTest.  The color in position 0,0 should be changed"
 	
@@ -62,6 +76,18 @@ ImageFormTest >> testFlipVertically [
 	aImageFlipped := aImage flipVertically.
 	self assert: (aImageFlipped colorAt: 0@0) equals: Color green.
 	self assert: (aImage colorAt: 0@0) equals: Color blue.
+]
+
+{ #category : #test }
+ImageFormTest >> testLighter [
+	"ligter an black image in 1. The result should be an white image"
+	
+	|aImage aImageLightered|
+	
+	aImage := ImageForm newFrom: (Form extent: 50@50 depth: 32).	
+	aImage fillColor: Color black.
+	aImageLightered := aImage lighter: 1.
+	self assert: (aImageLightered colorAt: 0@0) equals: (Color r: 1.0 g: 0.995 b: 0.995 alpha: 1.0).
 ]
 
 { #category : #test }

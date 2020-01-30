@@ -92,10 +92,10 @@ ImageForm class >> open: aFileName [
 { #category : #operators }
 ImageForm >> + aImage [
 	"Sum pixel to pixel two images, and return new ImageForm. The channels that be bigger than 1 is setter in 1. It affects the alpha channel."
+	
 	|aImageResult|
 	
 	aImageResult := self deepCopy.
-	
 	0  to: self width  do:[:x| 0  to: self height 
 								do:[:y|  
 									|aPoint aColorA aColorB|
@@ -110,10 +110,10 @@ ImageForm >> + aImage [
 { #category : #operators }
 ImageForm >> - aImage [
 		"Subtraction pixel to pixel two images, and return new ImageForm. The channels that be lower than 0  is setter in 0.. It affects the alpha channel."
+	
 	|aImageResult|
 	
 	aImageResult := self deepCopy.
-	
 	0 to: self width  do:[:x| 0 to: self height 
 								do:[:y|  
 									|aPoint aColorA aColorB aColorC|
@@ -129,7 +129,9 @@ ImageForm >> - aImage [
 { #category : #converting }
 ImageForm >> asGrayScale [
 	"Convert Colors to Gray Colors. Return a new ImageForm. the alpha channel is set in 1."
+	
 	| aImageForm|
+	
 	aImageForm := self collectColors:[:each | 
 										|aIntensity|
 										aIntensity := (0.2125 * each red) + (0.7154 * each green)  + (0.0721 * each blue).
@@ -142,7 +144,9 @@ ImageForm >> asGrayScale [
 { #category : #converting }
 ImageForm >> asGrayScaleWithAlpha [ 
 	"Convert Colors to Gray Colors. Return a new ImageForm. Keep the alpha channel"
+	
 	| aImageForm|
+	
 	aImageForm := self collectColors:[:each | 
 										|aIntensity|
 										aIntensity := (0.2125 * each red) + (0.7154 * each green)  + (0.0721 * each blue).
@@ -153,9 +157,29 @@ ImageForm >> asGrayScaleWithAlpha [
 ]
 
 { #category : #'image manipulation' }
+ImageForm >> crop: aPoint h: aH w: aW [
+	"crop an image begin for aPoint. degrees the image. Return a new ImageForm.
+	aCropImage := aImage crop: 0@0 h:200 w: 400. "
+	
+	| aForm aFormImage|
+	
+	aForm := Form extent: aW@aH depth:32.
+	aFormImage := self deepCopy.
+	aPoint x  to: (aPoint x + aW)  do:[:x| aPoint y  to: (aPoint y + aH) 
+								do:[:y|  
+									|aCoord aNewPoint|
+									aCoord := (Point x: x y: y).
+									aNewPoint := (aCoord x - aPoint x)@(aCoord y - aPoint y).
+									aForm colorAt: aNewPoint put: (aFormImage colorAt: aCoord). ]].
+	^ self class newFrom: aForm.
+]
+
+{ #category : #'image manipulation' }
 ImageForm >> flipHorizontally [
 	"Flip Horizontally. Return a new ImageForm."
+	
 	| aForm aFormImage|
+	
 	aForm:= super flipBy: #horizontal centerAt: (0@0).
 	aFormImage := self class newFrom: aForm.
 		
@@ -165,8 +189,22 @@ ImageForm >> flipHorizontally [
 { #category : #'image manipulation' }
 ImageForm >> flipVertically [
 	"Flip Vertically. Return a new ImageForm."
+	
 	| aForm aFormImage|
+	
 	aForm:= super flipBy: #vertical centerAt: (0@0).
+	aFormImage := self class newFrom: aForm.
+		
+	^ aFormImage
+]
+
+{ #category : #'image manipulation' }
+ImageForm >> lighter: aFactor [
+	"lighter an image. aFactor is a float from 0 to 1. Return a new ImageForm."
+	
+	| aForm aFormImage|
+	
+	aForm:= super lighter:aFactor.
 	aFormImage := self class newFrom: aForm.
 		
 	^ aFormImage
@@ -177,6 +215,7 @@ ImageForm >> rotateBy: aDeg [
 	"rotate aDeg degrees the image. Return a new ImageForm."
 	
 	| aForm aFormImage|
+	
 	aFormImage := self deepCopy.
 	aForm:= super rotateBy: aDeg.
 	aFormImage := self class newFrom: aForm.
@@ -188,7 +227,9 @@ ImageForm >> rotateBy: aDeg [
 ImageForm >> rotateBy: direction centerAt: aPoint [
 	"Rotate in a direction with the center in point. Return a new ImageForm. Possible values for
 	direction = #left, #right or #pi"
+	
 	| aForm aFormImage|
+	
 	aFormImage := self deepCopy.
 	aForm:= super rotateBy: direction centerAt: aPoint.
 	aFormImage := self class newFrom: aForm.
@@ -199,6 +240,7 @@ ImageForm >> rotateBy: direction centerAt: aPoint [
 { #category : #'file in/out' }
 ImageForm >> save: aName [
 	"save in disk a image. The extension support are .png; .jpg; or .jpge"
+	
 	('*.png' match: aName) 
 		ifTrue:[self writePNGFileNamed: aName. ^self].
 	
@@ -234,6 +276,7 @@ ImageForm >> shape [
 { #category : #showing }
 ImageForm >> show [
 	"show one image in the world"
+	
 	self show:'Image'
 ]
 
