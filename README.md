@@ -9,7 +9,7 @@ Small Lib for basic Image processing. Programmed in Pharo for Pharo :)
 ```smalltalk
 Metacello new
   baseline: #ImageForm;
-  repository: 'github://pablo1n7/ImageForm';
+  repository: 'github://pablo1n7/ImageForm/src';
   load.
 ```
 
@@ -90,4 +90,5 @@ aScaledImage save:'/Users/pablo/Documents/Pharo/pwq7S_scaled.png'.
 
 # TODO: 
 * [ ] Operations with Kernels.
+* [ ] Create Histogram for images.
 
