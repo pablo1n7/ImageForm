@@ -90,17 +90,6 @@ aResultSum := anImageB + anImageA.
 
 ```smalltalk
 anImage := ImageForm open: '/Users/pablo/Documents/pharo/pharo.png'.
-aGrayImage := anImage asGrayScale.
-aSobelKernel := {{-0.1. -0.1. -0.1}. 
-				 { -0.1. 0.80. -0.1}. 
-				 {-0.1. -0.1. -0.1}}.
-aResult := aGrayImage applyKernel:  aSobelKernel flattened .
-```
-![](https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pharo_sobel.png)
-
-
-```smalltalk
-anImage := ImageForm open: '/Users/pablo/Documents/pharo/pharo.png'.
 aGaussianKernel := {{ 1/256. 4/256. 6/256. 4/256. 1/256. }. 
 					{ 4/256. 16/256. 24/256. 16/256. 4/256.}. 
 					{ 6/256. 24/256. 36/256. 24/256. 6/256. }. 
@@ -112,12 +101,13 @@ aResult := anImage applyKernel:  aGaussianKernel flattened .
 
 ```smalltalk
 anImage := ImageForm open: '/Users/pablo/Documents/pharo/pharo.png'.
-anImagegray := anImage asGrayScale.
-anSobelKernel := {{-0.1. -0.1. -0.1}. { -0.1. 0.80. -0.1}. {-0.1. -0.1. -0.1}}.
-anImageResult := anImagegray applyKernel:  anSobelKernel flattened .
+aGrayImage := anImage asGrayScale.
+aSobelKernel := {{-0.1. -0.1. -0.1}. 
+				 { -0.1. 0.80. -0.1}. 
+				 {-0.1. -0.1. -0.1}}.
+aResult := aGrayImage applyKernel:  aSobelKernel flattened .
 ```
 ![](https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pharo_sobel.png)
-
 
 
 
