@@ -42,7 +42,7 @@ Class {
 { #category : #'instance creation' }
 ImageForm class >> imageTest [
 	"comment stating purpose of message"
-	| aImage aForm|
+	| aImage aForm |
 	
 	aForm := Form extent: 100@100 depth:32.
 	aImage := self newFrom: aForm.
@@ -50,42 +50,39 @@ ImageForm class >> imageTest [
 	
 	0 to: 50  do:[:x| 0 to: 50 
 				do:[:y| |aPoint|
-							aPoint := (Point x: x y: y).
-							aImage colorAt: aPoint put: (Color blue).]].
+							aPoint := Point x: x y: y.
+							aImage colorAt: aPoint put: Color blue ]].
 							
 	50 to: 100  do:[:x| 50 to: 100 
 				do:[:y| |aPoint|
-							aPoint := (Point x: x y: y).
-							aImage colorAt: aPoint put: (Color yellow ).]].
+							aPoint := Point x: x y: y.
+							aImage colorAt: aPoint put: Color yellow]].
 							
 	0 to: 50  do:[:x| 50 to: 100
 				do:[:y| |aPoint|
-							aPoint := (Point x: x y: y).
-							aImage colorAt: aPoint put: (Color green ).]].
-	^ aImage.
+							aPoint := Point x: x y: y.
+							aImage colorAt: aPoint put: Color green]].
+	^ aImage
 ]
 
 { #category : #'instance creation' }
 ImageForm class >> newFrom: aForm [
 	"comment stating purpose of message"
-	| aImage|
-	
+	| aImage |
 	aImage := self new.
 	aImage copyFrom: aForm.
-	^ aImage.
+	^ aImage
 ]
 
 { #category : #'instance creation' }
 ImageForm class >> open: aFileName [
 	"comment stating purpose of message"
-	| aImage aForm|
-	
-	(aFileName asFileReference exists) ifTrue: [ 
+	| aImage aForm |
+	aFileName asFileReference exists ifTrue: [ 
 		aForm := ImageReadWriter formFromFileNamed: aFileName.
 		aImage := self newFrom: aForm.
-		^ aImage.
+		^ aImage
 	].
-	
 	self error: 'File does not exist'.
 ]
 
@@ -96,13 +93,15 @@ ImageForm >> + aImage [
 	|aImageResult|
 	
 	aImageResult := self deepCopy.
-	0  to: self width  do:[:x| 0  to: self height 
-								do:[:y|  
-									|aPoint aColorA aColorB|
-									aPoint := (Point x: x y: y).
-									aColorA := aImageResult colorAt: aPoint.
-									aColorB := aImage colorAt: aPoint.
-									aImageResult colorAt: aPoint put: (aColorA + aColorB). ]].
+	0 to: self width  do: [:x| 
+		0 
+			to: self height 
+			do: [ :y |  
+					| aPoint aColorA aColorB |
+					aPoint := Point x: x y: y.
+					aColorA := aImageResult colorAt: aPoint.
+					aColorB := aImage colorAt: aPoint.
+					aImageResult colorAt: aPoint put: aColorA + aColorB ]].
 	^ aImageResult
 
 ]
@@ -132,8 +131,6 @@ ImageForm >> applyKernel: aKernel [
 	
 	anKernel := {{-0.1. -0.1. -0.1}. { -0.1. 0.80. -0.1}. {-0.1. -0.1. -0.1}}.
 	anImageResult := anImage applyKernel:  anKernel flattened .
-	
-	
 	"
 	
 	|anImage aDim|
@@ -144,11 +141,10 @@ ImageForm >> applyKernel: aKernel [
 	0  to: self width  do:[:x| 
 	0  to: self height do:[:y|  
 								|aPoint aColorA|
-								aPoint := (Point x: x y: y).
+								aPoint := Point x: x y: y.
 								aColorA := self getNeighborhood:
-								aPoint kernel:aKernel.
-								anImage colorAt: aPoint put: aColorA . 
-	]].
+								aPoint kernel: aKernel.
+								anImage colorAt: aPoint put: aColorA]].
 	
 	^anImage.
 ]
@@ -163,8 +159,7 @@ ImageForm >> asGrayScale [
 										|aIntensity|
 										aIntensity := (0.2125 * each red) + (0.7154 * each green)  + (0.0721 * each blue).
 										Color r:aIntensity g: aIntensity b: aIntensity alpha: 1.0. ].
-	
-		^ImageForm newFrom: aImageForm.
+	^ self class newFrom: aImageForm.
 	
 ]
 
@@ -299,12 +294,10 @@ ImageForm >> lighter: aFactor [
 ImageForm >> rotateBy: aDeg [
 	"rotate aDeg degrees the image. Return a new ImageForm."
 	
-	| aForm aFormImage|
-	
+	| aForm aFormImage |
 	aFormImage := self deepCopy.
 	aForm:= super rotateBy: aDeg.
 	aFormImage := self class newFrom: aForm.
-		
 	^ aFormImage
 ]
 
@@ -313,8 +306,7 @@ ImageForm >> rotateBy: direction centerAt: aPoint [
 	"Rotate in a direction with the center in point. Return a new ImageForm. Possible values for
 	direction = #left, #right or #pi"
 	
-	| aForm aFormImage|
-	
+	| aForm aFormImage |
 	aFormImage := self deepCopy.
 	aForm:= super rotateBy: direction centerAt: aPoint.
 	aFormImage := self class newFrom: aForm.
@@ -327,12 +319,12 @@ ImageForm >> save: aName [
 	"save in disk a image. The extension support are .png; .jpg; or .jpge"
 	
 	('*.png' match: aName) 
-		ifTrue:[self writePNGFileNamed: aName. ^self].
+		ifTrue: [ self writePNGFileNamed: aName. ^self ].
 	
 	(('*.jpg' match: aName) | ('*.jpge' match: aName)) 
-		ifTrue:[self writeJPEGfileNamed: aName. ^self.].
+		ifTrue: [ self writeJPEGfileNamed: aName. ^self ].
 		
-		self error:'Only support extension: .png; .jpg; or .jpge'.
+	self error:'Only support extension: .png; .jpg; or .jpge'.
 		
 	
 ]
@@ -341,21 +333,21 @@ ImageForm >> save: aName [
 ImageForm >> scaled: aWidth height: aHeight [
 	"Scaled one image. This method try to Keep relation of aspect. Return a new ImageForm."
 
-	^ self class newFrom: (super scaledToSize: (Point x: aWidth y: aHeight)).
+	^ self class newFrom: (super scaledToSize: (Point x: aWidth y: aHeight))
 ]
 
 { #category : #'image manipulation' }
 ImageForm >> scaledIntoFormOfSize: aSize [
 	"Scaled one image in aSize. Return a new ImageForm width shape aSizeXaSize."
 
-	^ self class newFrom: (super scaledIntoFormOfSize: aSize).
+	^ self class newFrom: (super scaledIntoFormOfSize: aSize)
 ]
 
 { #category : #accessing }
 ImageForm >> shape [
 	"return a string with format: widthXheight"
 
-	^ self width printString, 'X', self height printString.
+	^ self width printString, 'X', self height printString
 ]
 
 { #category : #showing }
