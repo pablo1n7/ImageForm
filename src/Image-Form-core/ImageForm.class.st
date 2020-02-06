@@ -126,6 +126,33 @@ ImageForm >> - aImage [
 
 ]
 
+{ #category : #'image manipulation' }
+ImageForm >> applyKernel: aKernel [
+	"Apply convolution to image. AKernel is a flattened list. Return a new ImageForm.
+	
+	anKernel := {{-0.1. -0.1. -0.1}. { -0.1. 0.80. -0.1}. {-0.1. -0.1. -0.1}}.
+	anImageResult := anImage applyKernel:  anKernel flattened .
+	
+	
+	"
+	
+	|anImage aDim|
+	
+	aDim := aKernel size sqrt.
+	(aDim = 3 or: aDim = 5 ) ifFalse:[self error: 'only supported 3x3 or 5x5 kernel size'].
+	anImage := self deepCopy.
+	0  to: self width  do:[:x| 
+	0  to: self height do:[:y|  
+								|aPoint aColorA|
+								aPoint := (Point x: x y: y).
+								aColorA := self getNeighborhood:
+								aPoint kernel:aKernel.
+								anImage colorAt: aPoint put: aColorA . 
+	]].
+	
+	^anImage.
+]
+
 { #category : #converting }
 ImageForm >> asGrayScale [
 	"Convert Colors to Gray Colors. Return a new ImageForm. the alpha channel is set in 1."
@@ -196,6 +223,64 @@ ImageForm >> flipVertically [
 	aFormImage := self class newFrom: aForm.
 		
 	^ aFormImage
+]
+
+{ #category : #accessing }
+ImageForm >> getNeighborhood: aPoint kernel: aKernel [
+ 	"Apply convolution to a point. AKernel is a flattened list. Return a new Color.
+	
+	aPixelColor := aImage getNeighborhood: 0@0 kernel:{0. 0. 0. 0. 1. 0. 0. 0. 0.}.
+	
+	"
+	
+	
+	|aPoints aRed aGreen aBlue aKernelR aDim|
+	aDim := aKernel size sqrt.
+	aPoints := self getPointNeighborhood: aPoint ksize: aDim@aDim.
+	aRed := 0.
+	aGreen := 0.
+	aBlue := 0.
+	aKernelR := aKernel.
+	aPoints collectWithIndex: [:aKPoint :inx| 
+											|aKColor aKFactor|
+											aKColor := (self colorAt: aKPoint).
+											aKFactor := (aKernelR at:inx).
+											aRed := aRed + (aKColor red * aKFactor). 
+											aGreen := aGreen + (aKColor green * aKFactor).
+											aBlue := aBlue + (aKColor blue * aKFactor).		
+										].
+	^ Color r: aRed g: aGreen  b: aBlue.  
+]
+
+{ #category : #accessing }
+ImageForm >> getPointNeighborhood: aPoint ksize: aKsize [
+ 	"Get a Neighbordhood of a point, aKsize is a shape like 3@3. Return a list of points. If the points are out of the image, it repeats the image border.
+	
+	 aImage getPointNeighborhood: 0@0 ksize: 3@3.
+	
+	"
+	
+	|aPoints aXvalues aYvalues factor|
+	
+	factor := (aKsize x -1 ) / 2.
+	aPoints := OrderedCollection new.
+	aXvalues := (aPoint x - factor) to: (aPoint x +  factor).
+	aYvalues := (aPoint y - factor) to: (aPoint y +  factor).
+	
+	aXvalues do: [ :x |
+		aYvalues do: [ :y |
+				|xK yK|
+				xK := x.
+				yK := y.
+				x < 0 ifTrue: [xK := 0]. "this need refactoring"
+				y < 0 ifTrue: [yK := 0].
+				x > (self width-1) ifTrue: [xK := self width-1].
+				y > (self height-1) ifTrue: [yK := self height-1].
+				
+				aPoints add: xK@yK.
+		].
+	].
+	^aPoints
 ]
 
 { #category : #'image manipulation' }

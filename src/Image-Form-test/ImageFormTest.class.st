@@ -8,6 +8,20 @@ Class {
 }
 
 { #category : #test }
+ImageFormTest >> testApplyKernel [
+	"Apply convolution to a image using a Identity Kernel. The image should not be changed"
+	
+	|anImage anImageKernel anIdentityKernel|
+	
+	anImage := ImageForm newFrom: (Form extent: 50@50 depth: 32).
+	anImage fillColor: Color red.	
+	anIdentityKernel := {{0. 0. 0}. { 0. 1. 0}. {0. 0. 0}}.
+	anImageKernel := anImage applyKernel:  anIdentityKernel flattened.
+	self assertCollection: anImage bits equals: anImageKernel bits.
+	
+]
+
+{ #category : #test }
 ImageFormTest >> testAsGrayScale [
 	"Covert a image in GrayScale. The color in position 0,0 should be changed"
 	|aForm aGrayImage aImage|
@@ -76,6 +90,44 @@ ImageFormTest >> testFlipVertically [
 	aImageFlipped := aImage flipVertically.
 	self assert: (aImageFlipped colorAt: 0@0) equals: Color green.
 	self assert: (aImage colorAt: 0@0) equals: Color blue.
+]
+
+{ #category : #test }
+ImageFormTest >> testGetNeighborhoodKernel [
+	"Apply convolution to a point using a Identity Kernel. The result color should not be chaged "
+	
+	|aForm aImage aPixelColor|
+	
+	aForm := Form extent: 100@100 depth:32.
+	aImage := ImageForm newFrom: aForm.
+	aImage fillColor: Color red.
+	
+	aPixelColor := aImage getNeighborhood: 0@0 kernel:{0. 0. 0. 0. 1. 0. 0. 0. 0.}.
+	self assert: aPixelColor equals: Color red. 
+	
+	
+]
+
+{ #category : #test }
+ImageFormTest >> testGetPointNeighborhoodKsize [
+
+	"Get a Neighbordhood of a point, with an image (3x3). should be return an expected list of points."
+	
+	|aForm aImage neighborhood|
+	
+	aForm := Form extent: 3@3 depth:32.
+	aImage := ImageForm newFrom: aForm.
+	aImage fillColor: Color red.
+	
+	neighborhood := aImage getPointNeighborhood: 0@0 ksize: 3@3.
+	self assertCollection: neighborhood  hasSameElements: {0@0. 0@0. 0@1. 0@0. 0@0. 0@1. 1@0. 1@0. 1@1} asOrderedCollection .
+	
+	neighborhood := aImage getPointNeighborhood: 1@1 ksize: 3@3.
+	self assertCollection: neighborhood  hasSameElements: {0@0. 0@1. 0@2. 1@0. 1@1. 1@2. 2@0. 2@1. 2@2} asOrderedCollection.
+	
+	neighborhood := aImage getPointNeighborhood: 2@2 ksize: 3@3.
+	self assertCollection: neighborhood  hasSameElements: {1@1. 1@2. 1@2. 2@1. 2@2. 2@2. 2@1. 2@2. 2@2} asOrderedCollection.
+
 ]
 
 { #category : #test }
