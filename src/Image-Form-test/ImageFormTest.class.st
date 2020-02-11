@@ -33,6 +33,29 @@ ImageFormTest >> testApplyKernel [
 ]
 
 { #category : #test }
+ImageFormTest >> testApplyMask [
+	"Apply mask an test image. The result should be transparent for black mask and blue for white mask"
+
+	| anImage anMask aResult |
+	anImage := self imageFormClass imageTest.
+	anMask := self imageFormClass
+		newFrom: (self formClass extent: anImage height  @ anImage width depth: 32).
+	anMask fillColor: Color black.
+	anMask colorAt: 10@10 put: Color white. 
+	aResult := anImage applyMask: anMask.
+	self
+		assert: (aResult colorAt: 0 @ 0)
+		equals: Color transparent.
+		
+	anMask fillColor: Color white.
+	anMask colorAt: 10@10 put: Color black. 
+	aResult := anImage applyMask: anMask.
+	self
+		assert: (aResult colorAt: 0 @ 0)
+		equals: Color blue
+]
+
+{ #category : #test }
 ImageFormTest >> testAsGrayScale [
 	"Covert a image in GrayScale. The color in position 0,0 should be changed"
 
@@ -95,6 +118,25 @@ ImageFormTest >> testCropHW [
 	self assert: aCroppedImage shape equals: '50X50'.
 	self assert: aImage shape equals: '100X100'.
 	self assert: aCroppedImage colorsUsed equals: {Color blue}
+]
+
+{ #category : #test }
+ImageFormTest >> testDarker [
+"darker a white image in 1. The result should be a black image"
+
+	| anImage anImageDarkered |
+	anImage := self imageFormClass
+		newFrom: (self formClass extent: 50 @ 50 depth: 32).
+	anImage fillColor: Color white.
+	anImageDarkered := anImage darker: 1.
+	self
+		assert: (anImageDarkered colorAt: 0 @ 0)
+		equals:
+			(Color
+				r: 0.004
+				g: 0.004
+				b: 0.004
+				alpha: 1.0)
 ]
 
 { #category : #test }
@@ -184,21 +226,39 @@ ImageFormTest >> testGetPointNeighborhoodKsize [
 
 { #category : #test }
 ImageFormTest >> testLighter [
-	"ligter an black image in 1. The result should be an white image"
+	"ligter a black image in 1. The result should be a white image"
 
-	| aImage aImageLightered |
-	aImage := self imageFormClass
+	| anImage anImageLightered |
+	anImage := self imageFormClass
 		newFrom: (self formClass extent: 50 @ 50 depth: 32).
-	aImage fillColor: Color black.
-	aImageLightered := aImage lighter: 1.
+	anImage fillColor: Color black.
+	anImageLightered := anImage lighter: 1.
 	self
-		assert: (aImageLightered colorAt: 0 @ 0)
+		assert: (anImageLightered colorAt: 0 @ 0)
 		equals:
 			(Color
 				r: 1.0
 				g: 0.995
 				b: 0.995
 				alpha: 1.0)
+]
+
+{ #category : #test }
+ImageFormTest >> testNegated [
+
+	| anImage aNegatedImage|
+	anImage := self imageFormClass newFrom: (self formClass extent: 50 @ 50 depth: 32).
+	anImage fillColor: Color black.
+	aNegatedImage := anImage negated.
+	self
+		assert: (aNegatedImage colorAt: 0 @ 0)
+		equals: Color white.
+		
+	anImage fillColor: Color red.
+	aNegatedImage := anImage negated.
+	self
+		assert: (aNegatedImage colorAt: 0 @ 0)
+		equals: Color cyan.
 ]
 
 { #category : #test }

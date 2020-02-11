@@ -1,35 +1,35 @@
 "
-Represent a image in Pharo. 
+Represent an image in Pharo. 
 
 This lib allows basic manipulate and show images.
 
 
 Example for open a image:
 
-aImageA := ImageForm open: '/Users/pablo/Documents/Pharo/pwq7S.jpg'.
+anImageA := ImageForm open: '/Users/pablo/Documents/Pharo/pwq7S.jpg'.
 
 Example to transform a GrayScale image.
 
-aGrayScaleImageA := aImageA asGrayScale.
+aGrayScaleImageA := anImageA asGrayScale.
 
 
 Example for sum two images:
 
-aImageB := ImageForm open: '/Users/pablo/Documents/Pharo/pharo.png'.
-aResultSum := aImageB - aImageA.
+anImageB := ImageForm open: '/Users/pablo/Documents/Pharo/pharo.png'.
+aResultSum := anImageB - anImageA.
 
 Example to show a image:
-aImageA show: 'Image A'.
+anImageA show: 'Image A'.
 
 Example to scaled:
 
-aSacaledImage := aImageA scaledFactor:500 height:100.
+aSacaledImage := anImageA scaledFactor:500 height:100.
 
 Example to flip:
 
-aFlippedImage := aImageA flipHorizontally.
+aFlippedImage := anImageA flipHorizontally.
 
-aFlippedImage := aImageA flipVertically.
+aFlippedImage := anImageA flipVertically.
 
 
 "
@@ -42,86 +42,97 @@ Class {
 { #category : #'instance creation' }
 ImageForm class >> imageTest [
 	"comment stating purpose of message"
-	| aImage aForm |
+	| anImage aForm |
 	
 	aForm := Form extent: 100@100 depth:32.
-	aImage := self newFrom: aForm.
-	aImage fillColor: Color red.
+	anImage := self newFrom: aForm.
+	anImage fillColor: Color red.
 	
 	0 to: 50  do:[:x| 0 to: 50 
 				do:[:y| |aPoint|
 							aPoint := Point x: x y: y.
-							aImage colorAt: aPoint put: Color blue ]].
+							anImage colorAt: aPoint put: Color blue ]].
 							
 	50 to: 100  do:[:x| 50 to: 100 
 				do:[:y| |aPoint|
 							aPoint := Point x: x y: y.
-							aImage colorAt: aPoint put: Color yellow]].
+							anImage colorAt: aPoint put: Color yellow]].
 							
 	0 to: 50  do:[:x| 50 to: 100
 				do:[:y| |aPoint|
 							aPoint := Point x: x y: y.
-							aImage colorAt: aPoint put: Color green]].
-	^ aImage
+							anImage colorAt: aPoint put: Color green]].
+	^ anImage
 ]
 
 { #category : #'instance creation' }
 ImageForm class >> newFrom: aForm [
 	"comment stating purpose of message"
-	| aImage |
-	aImage := self new.
-	aImage copyFrom: aForm.
-	^ aImage
+	| anImage |
+	anImage := self new.
+	anImage copyFrom: aForm.
+	^ anImage
+]
+
+{ #category : #'instance creation' }
+ImageForm class >> newImageColor: aColor width: aWidth height: aHeight [
+	"comment stating purpose of message"
+	| anImage aForm |
+	anImage := self new.
+	aForm := Form extent: aWidth @ aHeight depth:32.
+	aForm fillColor: aColor.
+	anImage copyFrom: aForm.
+	^ anImage
 ]
 
 { #category : #'instance creation' }
 ImageForm class >> open: aFileName [
-	"comment stating purpose of message"
-	| aImage aForm |
+	"Open an Image."
+	| anImage aForm |
 	aFileName asFileReference exists ifTrue: [ 
 		aForm := ImageReadWriter formFromFileNamed: aFileName.
-		aImage := self newFrom: aForm.
-		^ aImage
+		anImage := self newFrom: aForm.
+		^ anImage
 	].
 	self error: 'File does not exist'.
 ]
 
 { #category : #operators }
-ImageForm >> + aImage [
+ImageForm >> + anImage [
 	"Sum pixel to pixel two images, and return new ImageForm. The channels that be bigger than 1 is setter in 1. It affects the alpha channel."
 	
-	|aImageResult|
+	|anImageResult|
 	
-	aImageResult := self deepCopy.
+	anImageResult := self deepCopy.
 	0 to: self width  do: [:x| 
 		0 
 			to: self height 
 			do: [ :y |  
 					| aPoint aColorA aColorB |
 					aPoint := Point x: x y: y.
-					aColorA := aImageResult colorAt: aPoint.
-					aColorB := aImage colorAt: aPoint.
-					aImageResult colorAt: aPoint put: aColorA + aColorB ]].
-	^ aImageResult
+					aColorA := anImageResult colorAt: aPoint.
+					aColorB := anImage colorAt: aPoint.
+					anImageResult colorAt: aPoint put: aColorA + aColorB ]].
+	^ anImageResult
 
 ]
 
 { #category : #operators }
-ImageForm >> - aImage [
+ImageForm >> - anImage [
 		"Subtraction pixel to pixel two images, and return new ImageForm. The channels that be lower than 0  is setter in 0.. It affects the alpha channel."
 	
-	|aImageResult|
+	|anImageResult|
 	
-	aImageResult := self deepCopy.
+	anImageResult := self deepCopy.
 	0 to: self width  do:[:x| 0 to: self height 
 								do:[:y|  
 									|aPoint aColorA aColorB aColorC|
 									aPoint := (Point x: x y: y).
-									aColorA := aImageResult colorAt: aPoint.
-									aColorB := aImage colorAt: aPoint.
+									aColorA := anImageResult colorAt: aPoint.
+									aColorB := anImage colorAt: aPoint.
 									aColorC := aColorA - aColorB.
-									aImageResult colorAt: aPoint put: aColorC. ]].
-	^ aImageResult
+									anImageResult colorAt: aPoint put: aColorC. ]].
+	^ anImageResult
 
 ]
 
@@ -134,7 +145,6 @@ ImageForm >> applyKernel: aKernel [
 	"
 	
 	|anImage aDim|
-	
 	aDim := aKernel size sqrt.
 	(aDim = 3 or: aDim = 5 ) ifFalse:[self error: 'only supported 3x3 or 5x5 kernel size'].
 	anImage := self deepCopy.
@@ -150,38 +160,61 @@ ImageForm >> applyKernel: aKernel [
 ]
 
 { #category : #converting }
+ImageForm >> applyMask: aMask [ 
+	"Apply a Binary Mask in one image. The Result is a new Image, with color transparent in the position with black color in the mask."
+	
+	| anImageResult |
+	"({Color black. Color white. }  =  aMask colorsUsed)
+		ifFalse:[self error: 'the mask only has Black and White color.']."
+	anImageResult := self deepCopy.
+	0 to: self width  do: [:x| 
+		0 
+			to: self height 
+			do: [ :y |  
+					| aPoint aColorA aColorB |
+					aPoint := Point x: x y: y.
+					aColorA := anImageResult colorAt: aPoint.
+					aColorB := aMask colorAt: aPoint.
+					aColorB = Color black 
+						ifTrue: [ aColorA := Color transparent ].
+						
+					anImageResult colorAt: aPoint put: aColorA  ]].
+	^ anImageResult
+]
+
+{ #category : #converting }
 ImageForm >> asGrayScale [
 	"Convert Colors to Gray Colors. Return a new ImageForm. the alpha channel is set in 1."
 	
-	| aImageForm|
+	| anImageForm|
 	
-	aImageForm := self collectColors:[:each | 
+	anImageForm := self collectColors:[:each | 
 										|aIntensity|
 										aIntensity := (0.2125 * each red) + (0.7154 * each green)  + (0.0721 * each blue).
 										Color r:aIntensity g: aIntensity b: aIntensity alpha: 1.0. ].
-	^ self class newFrom: aImageForm.
+	^ ImageFormGrayScale newFrom: anImageForm.
 	
 ]
 
 { #category : #converting }
 ImageForm >> asGrayScaleWithAlpha [ 
-	"Convert Colors to Gray Colors. Return a new ImageForm. Keep the alpha channel"
+	"Convert Colors to Gray Colors. Return a new ImageFormGrayScale. Keep the alpha channel"
 	
-	| aImageForm|
+	| anImageForm|
 	
-	aImageForm := self collectColors:[:each | 
+	anImageForm := self collectColors:[:each | 
 										|aIntensity|
 										aIntensity := (0.2125 * each red) + (0.7154 * each green)  + (0.0721 * each blue).
 										Color r:aIntensity g: aIntensity b: aIntensity alpha: each alpha. ].
 									
-	^ImageForm newFrom: aImageForm.
+	^ImageFormGrayScale newFrom: anImageForm.
 	
 ]
 
 { #category : #'image manipulation' }
 ImageForm >> crop: aPoint h: aH w: aW [
 	"crop an image begin for aPoint. degrees the image. Return a new ImageForm.
-	aCropImage := aImage crop: 0@0 h:200 w: 400. "
+	aCropImage := anImage crop: 0@0 h:200 w: 400. "
 	
 	| aForm aFormImage|
 	
@@ -194,6 +227,17 @@ ImageForm >> crop: aPoint h: aH w: aW [
 									aNewPoint := (aCoord x - aPoint x)@(aCoord y - aPoint y).
 									aForm colorAt: aNewPoint put: (aFormImage colorAt: aCoord). ]].
 	^ self class newFrom: aForm.
+]
+
+{ #category : #'image manipulation' }
+ImageForm >> darker: aFactor [
+	"darker an image. aFactor is a float from 0 to 1. Return a new ImageForm."
+	
+	| aForm aFormImage |
+	aForm:= super darker:aFactor.
+	aFormImage := self class newFrom: aForm.
+	
+	^ aFormImage
 ]
 
 { #category : #'image manipulation' }
@@ -224,7 +268,7 @@ ImageForm >> flipVertically [
 ImageForm >> getNeighborhood: aPoint kernel: aKernel [
  	"Apply convolution to a point. AKernel is a flattened list. Return a new Color.
 	
-	aPixelColor := aImage getNeighborhood: 0@0 kernel:{0. 0. 0. 0. 1. 0. 0. 0. 0.}.
+	aPixelColor := anImage getNeighborhood: 0@0 kernel:{0. 0. 0. 0. 1. 0. 0. 0. 0.}.
 	
 	"
 	
@@ -251,7 +295,7 @@ ImageForm >> getNeighborhood: aPoint kernel: aKernel [
 ImageForm >> getPointNeighborhood: aPoint ksize: aKsize [
  	"Get a Neighbordhood of a point, aKsize is a shape like 3@3. Return a list of points. If the points are out of the image, it repeats the image border.
 	
-	 aImage getPointNeighborhood: 0@0 ksize: 3@3.
+	 anImage getPointNeighborhood: 0@0 ksize: 3@3.
 	
 	"
 	
@@ -288,6 +332,18 @@ ImageForm >> lighter: aFactor [
 	aFormImage := self class newFrom: aForm.
 		
 	^ aFormImage
+]
+
+{ #category : #converting }
+ImageForm >> negated [ 
+	"Convert Colors to negated Colors. Return a new ImageForm. Keep the alpha channel"
+	
+	| anImageForm|
+	
+	anImageForm := self collectColors:[:each | each negated].
+									
+	^self class newFrom: anImageForm.
+	
 ]
 
 { #category : #'image manipulation' }
