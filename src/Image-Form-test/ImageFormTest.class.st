@@ -262,6 +262,29 @@ ImageFormTest >> testNegated [
 ]
 
 { #category : #test }
+ImageFormTest >> testNewFrom [
+	"Create a new image from an object Form."
+
+	| anImage anForm |
+	anForm:= self formClass extent: 10@10 depth: 32.
+	anImage := self imageFormClass newFrom: anForm.
+	self assert: anForm bits equals: anImage bits.
+	
+]
+
+{ #category : #test }
+ImageFormTest >> testNewImageColorWidthHeight [	
+	"Create a new image with filled color."
+
+	| anImage anForm |
+	anForm:= self formClass extent: 10@10 depth: 32.
+	anForm fillColor: Color blue.
+	anImage := self imageFormClass newImageColor: Color blue width: 10 height: 10.
+	self assert: anForm bits equals: anImage bits.
+	
+]
+
+{ #category : #test }
 ImageFormTest >> testOpen [
 	"Save an image in the imageDirectory and Open it. The image should be the same. Before exit remove the image."
 

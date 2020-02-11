@@ -41,7 +41,7 @@ Class {
 
 { #category : #'instance creation' }
 ImageForm class >> imageTest [
-	"comment stating purpose of message"
+	"Return a Image test."
 	| anImage aForm |
 	
 	aForm := Form extent: 100@100 depth:32.
@@ -67,7 +67,8 @@ ImageForm class >> imageTest [
 
 { #category : #'instance creation' }
 ImageForm class >> newFrom: aForm [
-	"comment stating purpose of message"
+	"New ImageForm from an object Form."
+	
 	| anImage |
 	anImage := self new.
 	anImage copyFrom: aForm.
@@ -76,7 +77,8 @@ ImageForm class >> newFrom: aForm [
 
 { #category : #'instance creation' }
 ImageForm class >> newImageColor: aColor width: aWidth height: aHeight [
-	"comment stating purpose of message"
+	"Return a new ImageForm filled with aColor. The size is aWidth x aHeight."
+	
 	| anImage aForm |
 	anImage := self new.
 	aForm := Form extent: aWidth @ aHeight depth:32.
@@ -88,6 +90,7 @@ ImageForm class >> newImageColor: aColor width: aWidth height: aHeight [
 { #category : #'instance creation' }
 ImageForm class >> open: aFileName [
 	"Open an Image."
+	
 	| anImage aForm |
 	aFileName asFileReference exists ifTrue: [ 
 		aForm := ImageReadWriter formFromFileNamed: aFileName.
@@ -213,7 +216,7 @@ ImageForm >> asGrayScaleWithAlpha [
 
 { #category : #'image manipulation' }
 ImageForm >> crop: aPoint h: aH w: aW [
-	"crop an image begin for aPoint. degrees the image. Return a new ImageForm.
+	"Crop an image begin for aPoint. degrees the image. Return a new ImageForm.
 	aCropImage := anImage crop: 0@0 h:200 w: 400. "
 	
 	| aForm aFormImage|
@@ -231,7 +234,7 @@ ImageForm >> crop: aPoint h: aH w: aW [
 
 { #category : #'image manipulation' }
 ImageForm >> darker: aFactor [
-	"darker an image. aFactor is a float from 0 to 1. Return a new ImageForm."
+	"Darker an image. aFactor is a float from 0 to 1. Return a new ImageForm."
 	
 	| aForm aFormImage |
 	aForm:= super darker:aFactor.
@@ -324,7 +327,7 @@ ImageForm >> getPointNeighborhood: aPoint ksize: aKsize [
 
 { #category : #'image manipulation' }
 ImageForm >> lighter: aFactor [
-	"lighter an image. aFactor is a float from 0 to 1. Return a new ImageForm."
+	"Lighter an image. aFactor is a float from 0 to 1. Return a new ImageForm."
 	
 	| aForm aFormImage|
 	
@@ -336,7 +339,7 @@ ImageForm >> lighter: aFactor [
 
 { #category : #converting }
 ImageForm >> negated [ 
-	"Convert Colors to negated Colors. Return a new ImageForm. Keep the alpha channel"
+	"Convert an image to negated image form. Return a new ImageForm. Keep the alpha channel"
 	
 	| anImageForm|
 	
@@ -372,15 +375,18 @@ ImageForm >> rotateBy: direction centerAt: aPoint [
 
 { #category : #'file in/out' }
 ImageForm >> save: aName [
-	"save in disk a image. The extension support are .png; .jpg; or .jpge"
+	"Save in disk a image. Supported extensions: .png; .jpg; .bmp; and .jpeg"
 	
 	('*.png' match: aName) 
 		ifTrue: [ self writePNGFileNamed: aName. ^self ].
 	
-	(('*.jpg' match: aName) | ('*.jpge' match: aName)) 
+	(('*.jpg' match: aName) | ('*.jpeg' match: aName)) 
 		ifTrue: [ self writeJPEGfileNamed: aName. ^self ].
 		
-	self error:'Only support extension: .png; .jpg; or .jpge'.
+	('*.bmp' match: aName) 
+		ifTrue: [ self writeBMPfileNamed: aName. ^self ].
+		
+	self error:'Only support extension: .png; .jpg; .bmp; and .jpeg'.
 		
 	
 ]
@@ -417,8 +423,7 @@ ImageForm >> show [
 ImageForm >> show: anTitle [
 	"show one image in the world with a title. Always sacaled the image in 500x500"
 	
-	|im|
-
+	| im |
 	im := (ImageMorph withForm: (self scaledIntoFormOfSize:500) ). 
 	im withSnapshotBorder.
 	im borderWidth: 5.
