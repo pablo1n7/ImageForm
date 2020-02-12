@@ -18,6 +18,21 @@ ImageFormTest >> imageFormClass [
 ]
 
 { #category : #test }
+ImageFormTest >> testAcumulateColor [
+	""
+
+	| anImage acumulate |
+	anImage := self imageFormClass newImageColor: Color blue width: 10 height: 10.
+	acumulate := anImage acumulateColor: anImage blues.
+	self 
+		assert: (acumulate at:256) 
+		equals: 100.
+	self 
+		assert: (acumulate at:1) 
+		equals: 0.
+]
+
+{ #category : #test }
 ImageFormTest >> testApplyKernel [
 	"Apply convolution to a image using a Identity Kernel. The image should not be changed"
 
@@ -106,6 +121,26 @@ ImageFormTest >> testAsGrayScaleWithAlpha [
 				g: 0
 				b: 0
 				alpha: 0.2)
+]
+
+{ #category : #test }
+ImageFormTest >> testBlues [
+
+	| anImage acumulate |
+	anImage := self imageFormClass newImageColor: Color blue width: 10 height: 10.
+	acumulate := anImage blues. 
+	self assert: acumulate median > 0.98
+]
+
+{ #category : #test }
+ImageFormTest >> testColors [
+
+	| anImage colors |
+	anImage := self imageFormClass newImageColor: Color red width: 10 height: 10.
+	colors := anImage colors.
+	self 
+		assertCollection: (colors asSet)
+		hasSameElements: { Color red }
 ]
 
 { #category : #test }
@@ -225,6 +260,15 @@ ImageFormTest >> testGetPointNeighborhoodKsize [
 ]
 
 { #category : #test }
+ImageFormTest >> testGreens [
+
+	| anImage acumulate |
+	anImage := self imageFormClass newImageColor: Color green width: 10 height: 10.
+	acumulate := anImage greens. 
+	self assert: acumulate median > 0.98
+]
+
+{ #category : #test }
 ImageFormTest >> testLighter [
 	"ligter a black image in 1. The result should be a white image"
 
@@ -281,6 +325,7 @@ ImageFormTest >> testNewImageColorWidthHeight [
 	anForm fillColor: Color blue.
 	anImage := self imageFormClass newImageColor: Color blue width: 10 height: 10.
 	self assert: anForm bits equals: anImage bits.
+	self assert: (anImage colorsUsed) equals:{Color blue}.
 	
 ]
 
@@ -299,6 +344,15 @@ ImageFormTest >> testOpen [
 	self
 		should: [ self imageFormClass open: 'estonoexiste.jpg' ]
 		raise: Error
+]
+
+{ #category : #test }
+ImageFormTest >> testReds [
+
+	| anImage acumulate |
+	anImage := self imageFormClass newImageColor: Color red width: 10 height: 10.
+	acumulate := anImage reds. 
+	self assert: acumulate median > 0.98
 ]
 
 { #category : #test }

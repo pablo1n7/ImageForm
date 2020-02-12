@@ -107,9 +107,9 @@ ImageForm >> + anImage [
 	|anImageResult|
 	
 	anImageResult := self deepCopy.
-	0 to: self width  do: [:x| 
+	0 to: self width -1  do: [:x| 
 		0 
-			to: self height 
+			to: self height -1
 			do: [ :y |  
 					| aPoint aColorA aColorB |
 					aPoint := Point x: x y: y.
@@ -127,7 +127,7 @@ ImageForm >> - anImage [
 	|anImageResult|
 	
 	anImageResult := self deepCopy.
-	0 to: self width  do:[:x| 0 to: self height 
+	0 to: self width -1  do:[:x| 0 to: self height -1
 								do:[:y|  
 									|aPoint aColorA aColorB aColorC|
 									aPoint := (Point x: x y: y).
@@ -137,6 +137,17 @@ ImageForm >> - anImage [
 									anImageResult colorAt: aPoint put: aColorC. ]].
 	^ anImageResult
 
+]
+
+{ #category : #accesing }
+ImageForm >> acumulateColor: aChannel [
+	""
+	
+	| anAcumulate aBlues|
+	anAcumulate := OrderedCollection new.
+	aBlues := (aChannel * 255) rounded.
+	anAcumulate := (0 to: 255) collect:[:each|(aBlues select:[:number|number=each]) size].
+	^anAcumulate
 ]
 
 { #category : #'image manipulation' }
@@ -212,6 +223,28 @@ ImageForm >> asGrayScaleWithAlpha [
 									
 	^ImageFormGrayScale newFrom: anImageForm.
 	
+]
+
+{ #category : #accesing }
+ImageForm >> blues [
+	""
+	^ self colors collect: [ :each | each blue.].
+]
+
+{ #category : #'image manipulation' }
+ImageForm >> colors [
+	"Create a new copy of the receiver with all the colors transformed by aBlock"
+	|aColors|
+	aColors := OrderedCollection new.
+	0 to: self width -1  do: [:x| 
+		0 
+			to: self height -1 
+			do: [ :y |  
+					| aPoint aColor|
+					aPoint := Point x: x y: y.
+					aColor:= self colorAt: aPoint.
+					aColors add: aColor.]].
+	^ aColors
 ]
 
 { #category : #'image manipulation' }
@@ -325,6 +358,12 @@ ImageForm >> getPointNeighborhood: aPoint ksize: aKsize [
 	^aPoints
 ]
 
+{ #category : #accesing }
+ImageForm >> greens [
+	""
+	^ self colors collect: [ :each | each green.].
+]
+
 { #category : #'image manipulation' }
 ImageForm >> lighter: aFactor [
 	"Lighter an image. aFactor is a float from 0 to 1. Return a new ImageForm."
@@ -347,6 +386,12 @@ ImageForm >> negated [
 									
 	^self class newFrom: anImageForm.
 	
+]
+
+{ #category : #accesing }
+ImageForm >> reds [
+	""
+	^ self colors collect: [ :each | each red.].
 ]
 
 { #category : #'image manipulation' }

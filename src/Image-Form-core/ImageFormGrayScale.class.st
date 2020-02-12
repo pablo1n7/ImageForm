@@ -118,7 +118,7 @@ ImageFormGrayScale >> asGrayScaleWithAlpha [
 
 { #category : #converting }
 ImageFormGrayScale >> closing: aKernel [
-	"Closing is reverse of Opening, Dilation followed by Erosion. "
+	"Closing is reverse of Opening, Dilation followed by Erosion. AKernel is a flattened list. Return a new ImageFormGrayScale."
 	
 	| dilation |
 	dilation := self dilation: aKernel flattened.
@@ -127,14 +127,14 @@ ImageFormGrayScale >> closing: aKernel [
 
 { #category : #converting }
 ImageFormGrayScale >> dilation: aKernel [
-	"Increases the white region in the image or size of foreground object increases."
+	"Increases the white region in the image or size of foreground object increases. AKernel is a flattened list. Return a new ImageFormGrayScale."
 	^ self applyKernel: aKernel flattened with: #max.
 
 ]
 
 { #category : #converting }
 ImageFormGrayScale >> erosion: aKernel [
-	"Erodes away the boundaries of foreground object."
+	"Erodes away the boundaries of foreground object. AKernel is a flattened list. Return a new ImageFormGrayScale."
 	^ self applyKernel: aKernel flattened with: #min.
 
 ]
