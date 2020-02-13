@@ -4,8 +4,6 @@
 
 Small Lib for basic Image processing. Programmed in Pharo for Pharo :) 
 
-<video autoplay="autoplay" controls="controls" loop="loop" playsinline="playsinline" preload="auto" src="https://storage.googleapis.com/kapwing/final_5e45b23d8e803b001593418d_629963.mp4"></video>
-
 # Install
 
 ```smalltalk
