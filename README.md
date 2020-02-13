@@ -13,7 +13,7 @@ Metacello new
   load.
 ```
 
-# Basic usage
+# Basic Operations
 
 ## Open an Image.
 
@@ -24,6 +24,20 @@ anImage := ImageForm open: '/Users/sdas/Documents/pwq7S.jpg'.
   <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S.jpg">
 </p>
 
+## Show Image.
+```smalltalk
+anImage show: 'Eileen Collins'.
+```
+![](https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/show.jpg)
+
+## Save Image.
+```smalltalk
+aScaledImage save:'/Users/pablo/Documents/Pharo/pwq7S_scaled.jpg'.
+aScaledImage save:'/Users/pablo/Documents/Pharo/pwq7S_scaled.png'.
+```
+
+# Color Operations
+
 ## Transform to Gray Scale.
 ```smalltalk
 aGrayImage := anImage asGrayScale
@@ -31,6 +45,32 @@ aGrayImage := anImage asGrayScale
 <p align="center">
   <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_gray.jpg">
 </p>
+
+## Lighter Image.
+```smalltalk
+aLighterImage := anImageForm lighter:0.25.
+```
+<p align="center">
+  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_lighter.jpg">
+</p>
+
+## Darker Image.
+```smalltalk
+aDarkerImage := anImageForm darker:0.25.
+```
+<p align="center">
+  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_darker.jpg">
+</p>
+
+## Negated Image.
+```smalltalk
+aNegatedImage := anImage negated .
+```
+<p align="center">
+  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_negated.png">
+</p>
+
+# Image Transformations.
 
 ## Flip Image.
 ```smalltalk
@@ -79,23 +119,8 @@ aCroppedImage := anImageForm crop: 0@0 h: 300  w: 500.
   <img src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_crop.jpg">
 </p>
 
-## Lighter Image.
-```smalltalk
-aLighterImage := anImageForm lighter:0.25.
-```
-<p align="center">
-  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_lighter.jpg">
-</p>
 
-## Darker Image.
-```smalltalk
-aDarkerImage := anImageForm darker:0.25.
-```
-<p align="center">
-  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_darker.jpg">
-</p>
-
-## Basic Arithmetics.
+# Basic Arithmetics.
 ```smalltalk
 anImageA := ImageForm open: '/Users/sdas/Documents/pwq7S.jpg'.
 anImageB := ImageForm open: '/Users/sdas/Documents/pharo.png'.
@@ -113,6 +138,7 @@ aSumResult := anImageB + anImageA.
   <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_sum.png">
 </p>
 
+# Advanced Operations
 ## Operations with kernels (3x3 and 5x5)
 
 ```smalltalk
@@ -140,17 +166,3 @@ aResult := aGrayImage applyKernel:  aSobelKernel flattened .
 <p align="center">
   <img height=180 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pharo_sobel.png">
 </p>
-
-
-
-## Show Image.
-```smalltalk
-anImage show: 'Eileen Collins'.
-```
-![](https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/show.jpg)
-
-## Save Image.
-```smalltalk
-aScaledImage save:'/Users/pablo/Documents/Pharo/pwq7S_scaled.jpg'.
-aScaledImage save:'/Users/pablo/Documents/Pharo/pwq7S_scaled.png'.
-```
