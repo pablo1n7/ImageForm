@@ -68,15 +68,15 @@ aRotatedImage := anImage rotateBy: #left centerAt: 0@0.
 aScaledImage := anImageA scaled: 100 height: 100. 
 ```
 <p align="center">
-  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_scaled.jpg">
+  <img src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_scaled.jpg">
 </p>
 
 ## Crop Image.
 ```smalltalk
-aCropImage := anImageForm crop: 0@0 h: 300  w: 500.
+aCroppedImage := anImageForm crop: 0@0 h: 300  w: 500.
 ```
 <p align="center">
-  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_crop.jpg">
+  <img src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_crop.jpg">
 </p>
 
 ## Lighter Image.
@@ -100,14 +100,14 @@ aDarkerImage := anImageForm darker:0.25.
 anImageA := ImageForm open: '/Users/sdas/Documents/pwq7S.jpg'.
 anImageB := ImageForm open: '/Users/sdas/Documents/pharo.png'.
 
-aResultSub := anImageB - anImageA.
+aSubResult := anImageB - anImageA.
 ```
 <p align="center">
   <img height=180 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_sub.png">
 </p>
 
 ```smalltalk
-aResultSum := anImageB + anImageA.
+aSumResult := anImageB + anImageA.
 ```
 <p align="center">
   <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_sum.png">
