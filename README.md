@@ -4,7 +4,7 @@
 
 Small Lib for basic Image processing. Programmed in Pharo for Pharo :) 
 
-<div style="height: 0; padding-bottom: calc(56.25% + 35px); position:relative; width: 100%;"><iframe allow="autoplay; gyroscope;" allowfullscreen height="100%" referrerpolicy="strict-origin" src="https://www.kapwing.com/e/5e45b23d8e803b001593418d" style="border:0; height:100%; left:0; overflow:hidden; position:absolute; top:0; width:100%" title="Embedded content made with Kapwing" width="100%"></iframe></div>
+<video autoplay="autoplay" controls="controls" loop="loop" playsinline="playsinline" preload="auto" src="https://storage.googleapis.com/kapwing/final_5e45b23d8e803b001593418d_629963.mp4"></video>
 
 # Install
 
