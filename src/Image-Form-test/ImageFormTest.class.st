@@ -18,15 +18,15 @@ ImageFormTest >> imageFormClass [
 ]
 
 { #category : #test }
-ImageFormTest >> testAcumulateColor [
+ImageFormTest >> testAccumulateColor [
 	""
 
 	| anImage acumulate |
 	anImage := self imageFormClass newImageColor: Color blue width: 10 height: 10.
-	acumulate := anImage acumulateColor: anImage blues.
+	acumulate := anImage accumulateColor: anImage blues.
 	self 
 		assert: (acumulate at:256) 
-		equals: 100.
+		equals: 1.
 	self 
 		assert: (acumulate at:1) 
 		equals: 0.

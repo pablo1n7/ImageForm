@@ -140,14 +140,14 @@ ImageForm >> - anImage [
 ]
 
 { #category : #accesing }
-ImageForm >> acumulateColor: aChannel [
-	""
+ImageForm >> accumulateColor: aChannel [
+	"Accumulate values for one channel in 0 to 255, returns in percentage"
 	
 	| anAcumulate aBlues|
 	anAcumulate := OrderedCollection new.
 	aBlues := (aChannel * 255) rounded.
 	anAcumulate := (0 to: 255) collect:[:each|(aBlues select:[:number|number=each]) size].
-	^anAcumulate
+	^anAcumulate / (self height * self width)
 ]
 
 { #category : #'image manipulation' }
@@ -227,7 +227,7 @@ ImageForm >> asGrayScaleWithAlpha [
 
 { #category : #accesing }
 ImageForm >> blues [
-	""
+	"returns all values for channel blue in RGB."
 	^ self colors collect: [ :each | each blue.].
 ]
 
@@ -360,7 +360,7 @@ ImageForm >> getPointNeighborhood: aPoint ksize: aKsize [
 
 { #category : #accesing }
 ImageForm >> greens [
-	""
+	"returns all values for channel green in RGB."
 	^ self colors collect: [ :each | each green.].
 ]
 
@@ -390,7 +390,7 @@ ImageForm >> negated [
 
 { #category : #accesing }
 ImageForm >> reds [
-	""
+	"returns all values for channel red in RGB."
 	^ self colors collect: [ :each | each red.].
 ]
 
