@@ -21,7 +21,7 @@ Metacello new
 anImage := ImageForm open: '/Users/sdas/Documents/pwq7S.jpg'.
 ```
 <p align="center">
-  <img height=180 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S.jpg">
+  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S.jpg">
 </p>
 
 ## Transform to Gray Scale.
@@ -29,7 +29,7 @@ anImage := ImageForm open: '/Users/sdas/Documents/pwq7S.jpg'.
 aGrayImage := anImage asGrayScale
 ```
 <p align="center">
-  <img height=180 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_gray.jpg">
+  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_gray.jpg">
 </p>
 
 ## Flip Image.
@@ -38,14 +38,14 @@ aFlippedImage := anImage flipHorizontally.
 ```
 
 <p align="center">
-  <img height=180 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_flipHorizontally.jpg">
+  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_flipHorizontally.jpg">
 </p>
 
 ```smalltalk
 aFlippedImage := anImage flipVertically.
 ```
 <p align="center">
-  <img height=180 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_flipVertically.jpg">
+  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_flipVertically.jpg">
 </p>
 
 ## Rotate Image.
@@ -53,14 +53,14 @@ aFlippedImage := anImage flipVertically.
 aRotatedImage := anImage rotateBy: 45.
 ```
 <p align="center">
-  <img height=180 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_rotated45.png">
+  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_rotated45.png">
 </p>
 
 ```smalltalk
 aRotatedImage := anImage rotateBy: #left centerAt: 0@0. 
 ```
 <p align="center">
-  <img height=180 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_rotatedLeft.jpg">
+  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_rotatedLeft.jpg">
 </p>
 
 ## Scale Image.
@@ -68,7 +68,7 @@ aRotatedImage := anImage rotateBy: #left centerAt: 0@0.
 aScaledImage := anImageA scaled: 100 height: 100. 
 ```
 <p align="center">
-  <img height=180 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_scaled.jpg">
+  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_scaled.jpg">
 </p>
 
 ## Crop Image.
@@ -76,7 +76,7 @@ aScaledImage := anImageA scaled: 100 height: 100.
 aCropImage := anImageForm crop: 0@0 h: 300  w: 500.
 ```
 <p align="center">
-  <img height=180 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_crop.jpg">
+  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_crop.jpg">
 </p>
 
 ## Lighter Image.
@@ -84,7 +84,7 @@ aCropImage := anImageForm crop: 0@0 h: 300  w: 500.
 aLighterImage := anImageForm lighter:0.25.
 ```
 <p align="center">
-  <img height=180 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_lighter.jpg">
+  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_lighter.jpg">
 </p>
 
 ## Darker Image.
@@ -92,7 +92,7 @@ aLighterImage := anImageForm lighter:0.25.
 aDarkerImage := anImageForm darker:0.25.
 ```
 <p align="center">
-  <img height=180 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_darker.jpg">
+  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_darker.jpg">
 </p>
 
 ## Basic Arithmetics.
@@ -110,7 +110,7 @@ aResultSub := anImageB - anImageA.
 aResultSum := anImageB + anImageA.
 ```
 <p align="center">
-  <img height=180 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_sum.png">
+  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_sum.png">
 </p>
 
 ## Operations with kernels (3x3 and 5x5)
@@ -125,7 +125,7 @@ aGaussianKernel := {{ 1/256. 4/256. 6/256. 4/256. 1/256. }.
 aResult := anImage applyKernel:  aGaussianKernel flattened .
 ```
 <p align="center">
-  <img height=180 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_gaussian.png">
+  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_gaussian.png">
 </p>
 
 
