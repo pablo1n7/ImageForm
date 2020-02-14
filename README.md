@@ -21,7 +21,7 @@ Metacello new
 anImage := ImageForm open: '/Users/sdas/Documents/pwq7S.jpg'.
 ```
 <p align="center">
-  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S.jpg">
+  <img src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S.jpg">
 </p>
 
 ## Show Image.
@@ -40,10 +40,15 @@ aScaledImage save:'/Users/pablo/Documents/Pharo/pwq7S_scaled.png'.
 
 ## Transform to Gray Scale.
 ```smalltalk
-aGrayImage := anImage asGrayScale
+aGrayImage := anImage asGrayScale 
+```
+or
+
+```smalltalk
+aGrayImage := ImageFormGrayScale open: '/Users/sdas/Documents/pwq7S.jpg'.
 ```
 <p align="center">
-  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_gray.jpg">
+  <img src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_gray.jpg">
 </p>
 
 ## Lighter Image.
@@ -51,7 +56,7 @@ aGrayImage := anImage asGrayScale
 aLighterImage := anImageForm lighter:0.25.
 ```
 <p align="center">
-  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_lighter.jpg">
+  <img src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_lighter.jpg">
 </p>
 
 ## Darker Image.
@@ -59,7 +64,7 @@ aLighterImage := anImageForm lighter:0.25.
 aDarkerImage := anImageForm darker:0.25.
 ```
 <p align="center">
-  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_darker.jpg">
+  <img src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_darker.jpg">
 </p>
 
 ## Negated Image.
@@ -67,7 +72,7 @@ aDarkerImage := anImageForm darker:0.25.
 aNegatedImage := anImage negated .
 ```
 <p align="center">
-  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_negated.png">
+  <img src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_negated.png">
 </p>
 
 # Image Transformations.
@@ -78,14 +83,14 @@ aFlippedImage := anImage flipHorizontally.
 ```
 
 <p align="center">
-  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_flipHorizontally.jpg">
+  <img src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_flipHorizontally.jpg">
 </p>
 
 ```smalltalk
 aFlippedImage := anImage flipVertically.
 ```
 <p align="center">
-  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_flipVertically.jpg">
+  <img src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_flipVertically.jpg">
 </p>
 
 ## Rotate Image.
@@ -93,14 +98,14 @@ aFlippedImage := anImage flipVertically.
 aRotatedImage := anImage rotateBy: 45.
 ```
 <p align="center">
-  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_rotated45.png">
+  <img  src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_rotated45.png">
 </p>
 
 ```smalltalk
 aRotatedImage := anImage rotateBy: #left centerAt: 0@0. 
 ```
 <p align="center">
-  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_rotatedLeft.jpg">
+  <img src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_rotatedLeft.jpg">
 </p>
 
 ## Scale Image.
@@ -128,14 +133,14 @@ anImageB := ImageForm open: '/Users/sdas/Documents/pharo.png'.
 aSubResult := anImageB - anImageA.
 ```
 <p align="center">
-  <img height=180 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_sub.png">
+  <img src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_sub.png">
 </p>
 
 ```smalltalk
 aSumResult := anImageB + anImageA.
 ```
 <p align="center">
-  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_sum.png">
+  <img src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_sum.png">
 </p>
 
 # Advanced Operations
@@ -151,7 +156,7 @@ aGaussianKernel := {{ 1/256. 4/256. 6/256. 4/256. 1/256. }.
 aResult := anImage applyKernel:  aGaussianKernel flattened .
 ```
 <p align="center">
-  <img height=500 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_gaussian.png">
+  <img src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pwq7S_gaussian.png">
 </p>
 
 
@@ -164,6 +169,45 @@ aSobelKernel := {{-0.1. -0.1. -0.1}.
 aResult := aGrayImage applyKernel:  aSobelKernel flattened .
 ```
 <p align="center">
-  <img height=180 src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pharo_sobel.png">
+  <img src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/pharo_sobel.png">
 </p>
+
+# Gray Scale Operations
+
+```smalltalk
+anImage := ImageForm open: '/Users/pablo/Documents/pharo/icon.png'.
+aGrayImage := anImage asGrayScale.
+```
+
+## Transform to Binary Image.
+
+```smalltalk
+ aBinaryImage := aGrayImage asBinaryImage: 0.1.
+```
+<p align="center">
+  <img src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/binary.png">
+</p>
+
+
+## Erosion.
+
+```smalltalk
+anErosionImage := aBinaryImage erosion: ImageFormGrayScale squareKernel3x3 iterations: 6.
+```
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/erosion.png">
+</p>
+
+## Dilation.
+
+```smalltalk
+anDilationImage := aBinaryImage dilation: ImageFormGrayScale squareKernel3x3 iterations: 6.
+```
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/pablo1n7/ImageForm/master/examples/dilation.png">
+</p>
+
+
 
