@@ -133,10 +133,33 @@ ImageFormGrayScale >> dilation: aKernel [
 ]
 
 { #category : #converting }
+ImageFormGrayScale >> dilation: aKernel iterations: aNum [
+	"Increases the white region in the image or size of foreground object increases. AKernel is a flattened list. Return a new ImageFormGrayScale."
+	
+	| anImage |
+	anImage := self dilation: aKernel.
+	1 to: aNum -1 do:[ :each| anImage := anImage dilation: aKernel.	].
+	^anImage.
+		
+	
+]
+
+{ #category : #converting }
 ImageFormGrayScale >> erosion: aKernel [
 	"Erodes away the boundaries of foreground object. AKernel is a flattened list. Return a new ImageFormGrayScale."
 	^ self applyKernel: aKernel flattened with: #min.
 
+]
+
+{ #category : #converting }
+ImageFormGrayScale >> erosion: aKernel iterations: aNum [
+	"Erodes away the boundaries of foreground object. AKernel is a flattened list. Return a new ImageFormGrayScale."
+	
+	| anImage |
+	anImage := self erosion: aKernel.
+	1 to: aNum -1 do:[ :each| anImage := anImage erosion: aKernel.	].
+	^anImage.
+	
 ]
 
 { #category : #converting }
